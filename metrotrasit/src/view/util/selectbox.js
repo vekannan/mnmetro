@@ -8,8 +8,11 @@ const selectBox = props => {
     } = props;
     return(<div>
     {datas && datas.length !== 0 && <select className="selectbox" onChange={changeAction}>
-        <option value=''>Select direction</option>
-        { datas.map(data => <option key={data[`${val}`]} value={data[`${val}`]}>{data[`${label}`]}</option>)}
+        <option key='' value=''>Select direction</option>
+        { datas.map(data => {
+            if(data[`${val}`] && data[`${label}`])
+                return <option key={data[`${val}`]} value={data[`${val}`]}>{data[`${label}`]}</option>
+        })}
     </select>}</div>)
 }
 

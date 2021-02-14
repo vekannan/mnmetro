@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+#snapshots
+*.test.js.snap
 # testing
 /coverage
 
