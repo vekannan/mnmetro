@@ -1,50 +1,49 @@
 const initState = {
-    routes: [],
-    directions: [],
-    stops: [],
     departures: [],
-    route:'',
     direction: '',
+    directions: [],
+    route:'',
+    routes: [],
     stop:'',
-    
+    stops: [],
 }
 
-const reducer = (state = initState, action) => {
+const reducer = (state = initState, action = {}) => {
 
     const newState = {...state}
     const {
-        type = '',
-        routes = [],
-        directions = [],
-        stops = [],
         depatures = [],
-        route_id = '',
         direction_id = '',
-        stop_id = ''
+        directions = [],
+        route_id = '',
+        routes = [],
+        stop_id = '',
+        stops = [],
+        type = '',
     } = action;
     switch(type) {
         case 'updateRoutes':
-            newState.routes = routes;
-            newState.directions = directions;
-            newState.stops = stops;
             newState.departures = depatures;
-            newState.route = route_id;
             newState.direction = direction_id;
+            newState.directions = directions;
+            newState.route = route_id;
+            newState.routes = routes;
             newState.stop = stop_id;
+            newState.stops = stops;
           break;
         case 'updateDirections':
-            newState.directions = directions;
-            newState.stops = stops;
             newState.departures = depatures;
-            newState.route = route_id;
             newState.direction = direction_id;
+            newState.directions = directions;
+            newState.route = route_id;
             newState.stop = stop_id;
+            newState.stops = stops;
           break;
         case 'updateStops':
-            newState.stops = stops;
             newState.departures = depatures;
             newState.direction = direction_id;
             newState.stop = stop_id;
+            newState.stops = stops;
           break;
         case 'updateDepartures':
             newState.departures = depatures;

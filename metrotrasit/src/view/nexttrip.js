@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import { connect } from 'react-redux'
 import { 
-    fetchRoutes,
-    fetchDirection,
-    fetchStops,
     fetchDeparture,
+    fetchDirection,
+    fetchRoutes,
+    fetchStops,
 } from '../store/actions/nextTripAction'
 import SelectBox from './util/selectbox'
 import Departures from './departures'
@@ -50,11 +50,11 @@ class nexttrip extends Component{
 
   render() {
     const {
-        routes,
-        directions,
-        stops,
         departures,
-        stop
+        directions,
+        routes,
+        stop,
+        stops,
     } = this.props
     return (
       <div className="App">
@@ -105,13 +105,13 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    routes: state.routes,
-    directions: state.directions,
-    stops:state.stops,
     departures: state.departures,
-    route: state.route,
     direction: state.direction,
+    directions: state.directions,
+    route: state.route,
+    routes: state.routes,
     stop:state.stop,
+    stops:state.stops,
   }
 }
 

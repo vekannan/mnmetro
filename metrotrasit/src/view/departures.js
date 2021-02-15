@@ -4,10 +4,10 @@ import React from 'react';
 const Departures = props => {
 
 const {
-    departureList,
     departureCountToShow,
-    showMoreDeparture,
     departureExpanded,
+    departureList,
+    showMoreDeparture,
 } = props
     return (
 			<div className="departure-container">
@@ -26,7 +26,7 @@ const {
                             {departureList?.departures?.slice(0, departureCountToShow).map((departure, index) => {
                                 return (<div className="departure-list" key={index}>
                                     <div className="route-discription">
-                                    <span className="route-id"><strong>{departure.route_id}</strong></span>
+                                    <span className="route-id"><strong>{departure.route_id}{departure.terminal}</strong></span>
                                     <span>{departure.description}</span>
                                     </div>
                                     <div className="depart-time">
