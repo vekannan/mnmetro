@@ -3,24 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-react": "^7.12.13",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "fetch-mock": "^9.11.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.2",
     "redux": "^4.0.5",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
     "web-vitals": "^1.0.1"
   },
   "jest": {
     "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!<rootDir>/node_modules/"
+      "./src/**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/reportWebVitals.js"
     ],
-    "coveragePathIgnorePatterns": ["<rootDir>/src/index.js"],
-    "coverageReporters": ["json", "text-summary", "lcov", "html"],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/index.js"
+    ],
+    "coverageReporters": [
+      "json",
+      "text-summary",
+      "lcov",
+      "html"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 100,
@@ -30,10 +43,10 @@
       }
     }
   },
-    "scripts": {
+  "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -56,5 +69,14 @@
   },
   "devDependencies": {
     "react-test-renderer": "^17.0.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
   }
 }

@@ -1,9 +1,5 @@
 
 import React from 'react';
-import '../App.css';
-
-
-
 
 const Departures = props => {
 
@@ -15,7 +11,7 @@ const {
 } = props
     return (
 			<div className="departure-container">
-				{ (departureList?.stops && departureList?.departures) ?
+				{ (departureList?.stops?.length && departureList?.departures?.length) ?
 					<div>
 						<div className="departure">
                             <div>
@@ -27,7 +23,7 @@ const {
 							</div>
 						</div>
 						<div role='list'>
-                            {props.departureList.departures.slice(0, departureCountToShow).map((departure, index) => {
+                            {departureList?.departures?.slice(0, departureCountToShow).map((departure, index) => {
                                 return (<div className="departure-list" key={index}>
                                     <div className="route-discription">
                                     <span className="route-id"><strong>{departure.route_id}</strong></span>

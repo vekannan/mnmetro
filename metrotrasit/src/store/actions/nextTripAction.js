@@ -1,4 +1,5 @@
 
+import getTransitInfo from '../../dataSource/transitAPI'
 export const updateRoutes = (routes) => {
     return { type: 'updateRoutes', routes } 
 }
@@ -17,51 +18,42 @@ export const updateDepartures = (depatures, stop_id) => {
 
 
 export const fetchDeparture = (route_id,direction_id,stop_id) => {
-    return dispatch => {
-        (route_id && direction_id && stop_id)
-        ? getTransitInfo(`${route_id}/${direction_id}/${stop_id}`).then(depatures => {
-            dispatch(updateDepartures(depatures, stop_id))
-        })
-        :  dispatch(updateDepartures([], ''))
+    return async dispatch => {
+        if(route_id && direction_id && stop_id) {
+            const response = await getTransitInfo(`${route_id}/${direction_id}/${stop_id}`);
+            return dispatch(updateDepartures(response, stop_id));
+        } else {
+            return dispatch(updateDepartures([], ''));
+        }
     }
 }
 
 export const fetchStops = (route_id,direction_id) => {
-    return dispatch => {
-        (route_id && direction_id)
-        ? getTransitInfo(`stops/${route_id}/${direction_id}`).then(stops => {
-            dispatch(updateStops(stops, direction_id))
-        })
-        : dispatch(updateStops([], ''))
+    return async dispatch => {
+        if(route_id && direction_id) {
+            const response = await getTransitInfo(`stops/${route_id}/${direction_id}`);
+            return dispatch(updateStops(response, direction_id));
+        } else {
+            return dispatch(updateStops([], ''));
+        }
     }
 }
 
 export const fetchDirection = (route_id) => {
-    return dispatch => {
-            route_id 
-            ? getTransitInfo(`directions/${route_id}`).then(directions => {
-                dispatch(updateDirection(directions, route_id));
-            })
-            : dispatch(updateDirection([], ''));
+    return async dispatch => {
+        if(route_id) {
+            const response = await getTransitInfo(`directions/${route_id}`);
+            return dispatch(updateDirection(response, route_id));
+        } else {
+            return dispatch(updateDirection([], ''))
+        }
     }
 }
 
 export const fetchRoutes = () => {
-    return dispatch => {
-        getTransitInfo('routes').then(routes => {
-            dispatch(updateRoutes(routes))
-        })
+    return async dispatch => {
+        const response = await getTransitInfo('routes');
+        return dispatch(updateRoutes(response));
     }
 }
 
-const getTransitInfo = (payload) => {
-    const url = `https://svc.metrotransit.org/nextripv2/${payload}`
-    return fetch(url).then(response => response.json())
-    .then(data => {
-        return data
-    })
-    .catch(error => {
-        console.error(error);
-        return error
-    })
-}

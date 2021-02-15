@@ -35,8 +35,6 @@ describe("GIVEN SelectBox", () => {
             <SelectBox datas={data} val={'key1'} 
             label={'val1'}
             changeAction={()=> {}} />);
-
-            console.log(selectBox.toJSON())
             expect(selectBox.toJSON()).toMatchSnapshot();
             expect(selectBox.toJSON().children[0].children.length).toBe(4);
         });
@@ -61,8 +59,6 @@ describe("GIVEN SelectBox", () => {
             <SelectBox datas={data} val={'key12'} 
             label={'val12'}
             changeAction={()=> {}} />);
-
-            console.log(selectBox.toJSON())
             expect(selectBox.toJSON()).toMatchSnapshot();
             expect(selectBox.toJSON().children[0].children.length).toBe(1);
         });

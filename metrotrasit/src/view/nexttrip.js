@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { connect } from 'react-redux'
 import { 
     fetchRoutes,
@@ -60,24 +60,27 @@ class nexttrip extends Component{
       <div className="App">
         <h2 className="page-title">Real-time Departures</h2>
         <div className="selectbox-container">
-            { routes.length ?
-            <SelectBox 
-              datas={routes} 
-              val={'route_id'} 
-              label={'route_label'} 
-              changeAction={this.onRouteChange} />:
-            (routes.errors && <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div>) 
+            { 
+            routes?.length 
+            ? <Fragment>
+                <SelectBox 
+                  datas={routes} 
+                  val={'route_id'} 
+                  label={'route_label'} 
+                  changeAction={this.onRouteChange} />
+                <SelectBox 
+                  datas={directions} 
+                  val={'direction_id'} 
+                  label={'direction_name'} 
+                  changeAction={this.onDirectionChange} />
+                <SelectBox 
+                  datas={stops} 
+                  val={'place_code'} 
+                  label={'description'} 
+                  changeAction={this.onStopChange} />
+              </Fragment>
+            : (routes?.errors && <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div>) 
             }
-            <SelectBox 
-              datas={directions} 
-              val={'direction_id'} 
-              label={'direction_name'} 
-              changeAction={this.onDirectionChange} />
-            <SelectBox 
-              datas={stops} 
-              val={'place_code'} 
-              label={'description'} 
-              changeAction={this.onStopChange} />  
         </div>
         {stop && 
               <Departures
