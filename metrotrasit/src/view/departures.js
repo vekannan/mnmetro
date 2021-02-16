@@ -1,6 +1,7 @@
 
 import React from 'react';
 
+
 const Departures = props => {
 
 const {
@@ -30,8 +31,6 @@ const {
                                     <span>{departure.description}</span>
                                     </div>
                                     <div className="depart-time">
-                                    {((new Date(departure.departure_time) -new Date()) < 5*60*1000) && 
-                                    <span className="blink"></span>}
                                         <strong>{departure.departure_text}</strong>
                                     </div>
                                 </div>)

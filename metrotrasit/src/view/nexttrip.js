@@ -17,21 +17,33 @@ class nexttrip extends Component{
     departureExpanded: false
   }
 
+  constructor(props) {
+    super(props)
+    this.updateDeparture = this.updateDeparture.bind(this)
+  }
+
   componentDidMount() {
     this.props.updateRoutes();
+    setInterval(this.updateDeparture, 60000)
   }
 
 
   onRouteChange = e =>{
-    this.props.updateDirection(e.target.value)
+    this.props.updateDirection(e.target.value);
   }
 
   onDirectionChange = e => {
-    this.props.updateStop(this.props.route,e.target.value)
+    this.props.updateStop(this.props.route,e.target.value);
   }
 
   onStopChange = e => {
-      this.props.updateDeparture(this.props.route,this.props.direction,e.target.value)
+      this.props.updateDeparture(this.props.route,this.props.direction,e.target.value);
+  }
+
+  async updateDeparture() {
+    if(this.props.route && this.props.direction && this.props.stop) {
+      this.props.updateDeparture(this.props.route,this.props.direction,this.props.stop);
+    }
   }
 
   showMoreDeparture = () => {
@@ -56,9 +68,15 @@ class nexttrip extends Component{
         stop,
         stops,
     } = this.props
+    const localConst = {
+      defaultRoutesText: 'Select route',
+      defaultDirectionText: 'Select direction',
+      defaultStopText: 'Select stop',
+      title: 'Real-time Departures'
+    }
     return (
       <div className="App">
-        <h2 className="page-title">Real-time Departures</h2>
+        <h2 className="page-title">{localConst.title}</h2>
         <div className="selectbox-container">
             { 
             routes?.length 
@@ -67,17 +85,20 @@ class nexttrip extends Component{
                   datas={routes} 
                   val={'route_id'} 
                   label={'route_label'} 
-                  changeAction={this.onRouteChange} />
+                  changeAction={this.onRouteChange}
+                  defaultText={localConst.defaultRoutesText}/>
                 <SelectBox 
                   datas={directions} 
                   val={'direction_id'} 
                   label={'direction_name'} 
-                  changeAction={this.onDirectionChange} />
+                  changeAction={this.onDirectionChange} 
+                  defaultText={localConst.defaultDirectionText}/>
                 <SelectBox 
                   datas={stops} 
                   val={'place_code'} 
                   label={'description'} 
-                  changeAction={this.onStopChange} />
+                  changeAction={this.onStopChange} 
+                  defaultText={localConst.defaultStopText}/>
               </Fragment>
             : (routes?.errors && <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div>) 
             }

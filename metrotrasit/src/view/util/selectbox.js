@@ -4,11 +4,12 @@ const selectBox = props => {
         datas,
         changeAction,
         val,
-        label
+        label,
+        defaultText
     } = props;
     return(<div>
     {datas && datas.length !== 0 && <select className="selectbox" onChange={changeAction}>
-        <option key='' value=''>Select direction</option>
+        <option key='' value=''>{defaultText}</option>
         { datas.map(data => {
             return <option key={data[`${val}`]} value={data[`${val}`]}>{data[`${label}`]}</option>
         })}
