@@ -18,7 +18,7 @@ Run node -v and npm -v to check if node is installed with specific version
 
     git clone https://github.com/vekannan/mnmetro.git
     
-3. After cloning a folder mnmetro will be created. 
+3. After cloning mnmetro folder will be created. 
 4. cd mnmetro/metrotrasit
 
 #### Install application
