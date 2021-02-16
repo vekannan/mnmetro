@@ -1,11 +1,13 @@
 # mnmetro
-mnmetro provides bus/train transit information. All the information are based on APIs available via Metro Transit NextTrip API. 
+mnmetro provides bus/train transit information. All the information are based on APIs response via Metro Transit NextTrip API. 
 For more information visit https://svc.metrotransit.org/nextrip
 swagger : https://svc.metrotransit.org/swagger/index.html 
 
 ## Prerequisites
 This application is developed using React 17 so need Node.js verison 9.10.1+ , npm.
-Visit https://nodejs.org/en/download/ To get more information to download Node.
+
+Visit https://nodejs.org/en/download/ to get more information to download Node.
+
 Run node -v and npm -v to check if node is installed with specific version
 
 ## Steps to run the application
