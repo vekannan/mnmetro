@@ -35,12 +35,19 @@ Run node -v and npm -v to check if node is installed with specific version
 2. All the files are minified and bundled under build folder
 
 ## Folder and code info
-This applicatoin uses react, redux , redux-thunk, Jest , renderer 
+This applicatoin uses react, redux , redux-thunk, Jest , renderer
+
+
 index.js --> Create Store with thunk as middleware and add the application in root node
+
 datastore > transitApi --> Call's API 
+
 store > action > action file
+
 store > reducers > reducer 
+
 view > util -> reusable selet component
+
 view > master component and departure component 
 
 
