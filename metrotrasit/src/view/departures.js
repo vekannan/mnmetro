@@ -1,6 +1,10 @@
 
 import React from 'react';
 
+const getMinDif = (futureDate) => {
+	var diffMs = (new Date(futureDate * 1000) - new Date()); 
+	return Math.round(((diffMs % 86400000) % 3600000) / 60000);
+}
 
 const Departures = props => {
 
@@ -31,6 +35,9 @@ const {
                                     <span>{departure.description}</span>
                                     </div>
                                     <div className="depart-time">
+									{departure?.departure_time && index === 0 &&
+											getMinDif(departure?.departure_time) < 30 && 
+											<span className="blink"></span>}
                                         <strong>{departure.departure_text}</strong>
                                     </div>
                                 </div>)
