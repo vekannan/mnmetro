@@ -64,7 +64,7 @@ view > util -> reusable selet component
 
 view > master component and departure component 
 
-
+__test__ > all test folders 
 
 
 
