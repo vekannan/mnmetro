@@ -66,8 +66,8 @@ view > master component and departure component
 
 __test__ > all test folders 
 
-
-
+## Description
+On page load, fetches routes and diplay routes dropdown. On selecting route directions dropdown loads and on selecting direction stops dropdown loads and on selecting stops list of departures loads . Departures list updated every 6mins the . The departure that is about to schedule in 30 mins will be diaplyed in blue icon. Page load will show only 3 departures. On slecting more option will be displayed  
 
 
 
