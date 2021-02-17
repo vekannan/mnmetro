@@ -1,5 +1,5 @@
-import React, {Component, Fragment} from 'react';
-import { connect } from 'react-redux'
+import React, {Fragment, useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { 
     fetchDeparture,
     fetchDirection,
@@ -10,73 +10,63 @@ import SelectBox from './util/selectbox'
 import Departures from './departures'
 import '../App.css';
 
-class nexttrip extends Component{
+function NextTrip() {
 
-  state = {
-    departureCountToShow: 3, 
-    departureExpanded: false
+  
+  const localConst = {
+    defaultRoutesText: 'Select route',
+    defaultDirectionText: 'Select direction',
+    defaultStopText: 'Select stop',
+    title: 'Real-time Departures'
+  }
+  const [departureCountToShow, setDepartureCountToShow] = useState(3);
+  const [departureExpanded, setDepartureExpanded] = useState(false);
+  const dispatch = useDispatch();
+  const departures = useSelector(state => state.departures);
+  const directions= useSelector(state =>state.directions);
+  const routes = useSelector(state =>state.routes);
+  const stop = useSelector(state =>state.stop);
+  const stops= useSelector(state =>state.stops);
+  const direction = useSelector(state => state.direction);
+  const route = useSelector( state => state.route);
+
+  const onRouteChange = e =>{
+    dispatch(fetchDirection(e.target.value));
   }
 
-  constructor(props) {
-    super(props)
-    this.updateDeparture = this.updateDeparture.bind(this)
+  const onDirectionChange = e => {
+    dispatch(fetchStops(route,e.target.value));
   }
 
-  componentDidMount() {
-    this.props.updateRoutes();
-    setInterval(this.updateDeparture, 60000)
+  const onStopChange = e => {
+    dispatch(fetchDeparture(route,direction,e.target.value));
   }
 
-
-  onRouteChange = e =>{
-    this.props.updateDirection(e.target.value);
-  }
-
-  onDirectionChange = e => {
-    this.props.updateStop(this.props.route,e.target.value);
-  }
-
-  onStopChange = e => {
-      this.props.updateDeparture(this.props.route,this.props.direction,e.target.value);
-  }
-
-  async updateDeparture() {
-    if(this.props.route && this.props.direction && this.props.stop) {
-      this.props.updateDeparture(this.props.route,this.props.direction,this.props.stop);
+  const updateDeparture = async () => {
+    if(route && direction && stop) {
+      dispatch(fetchDeparture(route,direction,stop));
     }
   }
 
-  showMoreDeparture = () => {
-    if(this.state.departureCountToShow === 3 ){
-      this.setState({
-        departureCountToShow: this.props.departures.departures.length,
-        departureExpanded: true
-      });
+  useEffect(() => {
+    dispatch(fetchRoutes());
+    setInterval(updateDeparture, 60000);
+  },[])
+
+  const showMoreDeparture = () => {
+    if(departureCountToShow === 3 ){
+      setDepartureCountToShow(departures.departures.length);
+      setDepartureExpanded(true);
     } else {
-      this.setState({
-        departureCountToShow: 3,
-        departureExpanded: false
-      });
+        setDepartureCountToShow(3)
+        setDepartureExpanded(false)
     }
 }
-
-  render() {
-    const {
-        departures,
-        directions,
-        routes,
-        stop,
-        stops,
-    } = this.props
-    const localConst = {
-      defaultRoutesText: 'Select route',
-      defaultDirectionText: 'Select direction',
-      defaultStopText: 'Select stop',
-      title: 'Real-time Departures'
-    }
-    return (
+  return(
+    <div>
       <div className="App">
         <h2 className="page-title">{localConst.title}</h2>
+        
         <div className="selectbox-container">
             { 
             routes?.length 
@@ -85,19 +75,19 @@ class nexttrip extends Component{
                   datas={routes} 
                   val={'route_id'} 
                   label={'route_label'} 
-                  changeAction={this.onRouteChange}
+                  changeAction={onRouteChange}
                   defaultText={localConst.defaultRoutesText}/>
                 <SelectBox 
                   datas={directions} 
                   val={'direction_id'} 
                   label={'direction_name'} 
-                  changeAction={this.onDirectionChange} 
+                  changeAction={onDirectionChange} 
                   defaultText={localConst.defaultDirectionText}/>
                 <SelectBox 
                   datas={stops} 
                   val={'place_code'} 
                   label={'description'} 
-                  changeAction={this.onStopChange} 
+                  changeAction={onStopChange} 
                   defaultText={localConst.defaultStopText}/>
               </Fragment>
             : (routes?.errors && <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div>) 
@@ -106,34 +96,14 @@ class nexttrip extends Component{
         {stop && 
               <Departures
                 departureList = {departures}
-                showMoreDeparture = {this.showMoreDeparture}
-                departureCountToShow = {this.state.departureCountToShow}
-                departureExpanded = {this.state.departureExpanded} 
+                showMoreDeparture = {showMoreDeparture}
+                departureCountToShow = {departureCountToShow}
+                departureExpanded = {departureExpanded} 
               />}
       </div>
-    );
-  }
+    </div>
+  )
+
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateRoutes: () => dispatch(fetchRoutes()),
-    updateDirection: (route_id) => dispatch(fetchDirection(route_id)),
-    updateStop: (route_id, direction_id) => dispatch(fetchStops(route_id,direction_id)),
-    updateDeparture: (route_id, direction_id, stop_id) => dispatch(fetchDeparture(route_id,direction_id,stop_id))
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    departures: state.departures,
-    direction: state.direction,
-    directions: state.directions,
-    route: state.route,
-    routes: state.routes,
-    stop:state.stop,
-    stops:state.stops,
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(nexttrip);
+export default NextTrip;
